@@ -13,10 +13,6 @@ import org.ixming.android.inject.annotation.ViewInject;
  */
 interface IViewInjector {
 	
-//	View findViewById(int id, int parentId);
-//	
-//	View findViewById(int id);
-	
 	/**
 	 * 实现动态获取并注入View。
 	 * @return 如果field中存在{@link ViewInject}该标注，则返回TRUE。

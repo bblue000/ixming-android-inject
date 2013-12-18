@@ -11,7 +11,12 @@ import android.view.View;
 
 /**
  * 本包是对{@link org.ixming.android.inject}包的扩展。
- * 
+ * <p>
+ * 跨应用的程序，比如皮肤的一种设计方式就是安装一系列不能够直接打开的应用包，
+ * 这些包中含有与皮肤相关的资源（图片或者颜色或者尺寸等等...）；
+ * <br/>
+ * 当应用需要根据当前皮肤设置获取资源时，可以考虑使用此包中的工具。
+ * </p>
  * @author Yin Yong
  * @version 1.0
  */
@@ -19,10 +24,40 @@ public class ThemedInjectorUtils {
 
 	final String TAG = ThemedInjectorUtils.class.getSimpleName();
 
+	private static ThemedInjectorUtils mSingleton = null;
+	
+	/**
+	 * 当应用想要以单例模式处理——所有用到本工具的地方，都配用同一套ThemedInjectConfigure设置
+	 */
+	public static synchronized ThemedInjectorUtils buildAsSingleton(ThemedInjectConfigure configure) {
+		if (null == mSingleton) {
+			mSingleton = new ThemedInjectorUtils(configure);
+		}
+		return mSingleton;
+	}
+	/**
+	 * 默认所有项都支持的实例。
+	 * 
+	 * <p>
+	 * Tips:当没有通过{@link ThemedInjectorUtils#buildAsSingleton(ThemedInjectConfigure)}设置客户端单例时，
+	 * 回创建一个新对象；<br/>
+	 * 当作为单例创建后，始终返回单例对象。
+	 * </p>
+	 */
 	public static ThemedInjectorUtils defaultInstance() {
 		return new ThemedInjectorUtils();
 	}
 
+	/**
+	 * 根据客户端自定义的configure设置获得相应支持的实例
+	 * 
+	 * <p>
+	 * <strong><i>Tips:</i></strong><br/>
+	 * 当没有通过{@link ThemedInjectorUtils#buildAsSingleton(ThemedInjectConfigure)}设置客户端单例时，
+	 * 回创建一个新对象；<br/>
+	 * 当作为单例创建后，始终返回单例对象。（configure is ignored）
+	 * </p>
+	 */
 	public static ThemedInjectorUtils instanceBuildFrom(
 			ThemedInjectConfigure configure) {
 		return new ThemedInjectorUtils(configure);
@@ -154,7 +189,7 @@ public class ThemedInjectorUtils {
 		}
 		for (Field field : fields) {
 			if (mConfigure.isInjectReses()) {
-				if (baseLoader.injectRes(target, field)) {
+				if (baseLoader.injectThemedRes(target, field)) {
 					continue;
 				}
 			}

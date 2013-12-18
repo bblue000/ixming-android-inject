@@ -18,7 +18,7 @@ class ActivityInjectLoader extends BaseInjectLoader {
 	}
 
 	@Override
-	protected View findViewById(int id) {
+	public View findViewById(int id) {
 		return mContext.findViewById(id);
 	}
 }

@@ -25,4 +25,12 @@ interface IResInjector {
 	 */
 	boolean injectRes(Object target, Field field);
 	
+	/**
+	 * 实现动态获取并注入资源。与{@link #injectRes(Object, Field)}不同的是，
+	 * 该方法实现获取具有Themed风格的资源。
+	 * 
+	 * @return 如果field中存在{@link ResInject}该标注，则返回TRUE。
+	 */
+	boolean injectThemedRes(Object target, Field field);
+	
 }

@@ -1,6 +1,7 @@
 package org.ixming.android.inject;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import org.ixming.android.inject.core.BaseInjectLoader;
 import org.ixming.android.inject.core.InjectLoaderFactory;
@@ -29,7 +30,7 @@ public class InjectorUtils {
 	/**
 	 * 当应用想要以单例模式处理——所有用到本工具的地方，都配用同一套InjectConfigure设置
 	 */
-	public static synchronized InjectorUtils buildAsSinglton(InjectConfigure configure) {
+	public static synchronized InjectorUtils buildAsSingleton(InjectConfigure configure) {
 		if (null == mSingleton) {
 			mSingleton = new InjectorUtils(configure);
 		}
@@ -40,7 +41,7 @@ public class InjectorUtils {
 	 * 默认所有项都支持的实例。
 	 * 
 	 * <p>
-	 * Tips:当没有通过{@link InjectorUtils#buildAsSinglton(InjectConfigure)}设置客户端单例时，
+	 * Tips:当没有通过{@link InjectorUtils#buildAsSingleton(InjectConfigure)}设置客户端单例时，
 	 * 回创建一个新对象；<br/>
 	 * 当作为单例创建后，始终返回单例对象。
 	 * </p>
@@ -54,7 +55,7 @@ public class InjectorUtils {
 	 * 
 	 * <p>
 	 * <strong><i>Tips:</i></strong><br/>
-	 * 当没有通过{@link InjectorUtils#buildAsSinglton(InjectConfigure)}设置客户端单例时，
+	 * 当没有通过{@link InjectorUtils#buildAsSingleton(InjectConfigure)}设置客户端单例时，
 	 * 回创建一个新对象；<br/>
 	 * 当作为单例创建后，始终返回单例对象。（configure is ignored）
 	 * </p>
@@ -155,22 +156,41 @@ public class InjectorUtils {
 	}
 
 	private void innerInject(Object target, InjectConfigure config, BaseInjectLoader baseLoader) {
+		boolean isInjectReses = config.isInjectReses();
+		boolean isInjectViews = config.isInjectViews();
+		boolean isInjectOnClickMethods = config.isInjectOnClickMethods();
 		// inject object
-		Field[] fields = target.getClass().getDeclaredFields();
-		if (null == fields || fields.length == 0) {
-			return;
-		}
-		for (Field field : fields) {
-			if (config.isInjectReses()) {
-				if (baseLoader.injectRes(target, field)) {
-					continue;
+		if (isInjectReses || isInjectViews) {
+			Field[] fields = target.getClass().getDeclaredFields();
+			if (null != fields && fields.length > 0) {
+				for (Field field : fields) {
+					if (isInjectReses) {
+						if (baseLoader.injectRes(target, field)) {
+							continue;
+						}
+					}
+					// next
+					if (isInjectViews) {
+						if (baseLoader.injectView(target, field)) {
+							continue;
+						}
+					}
+					// to be continued
 				}
 			}
-			if (config.isInjectViews()) {
-				if (baseLoader.injectView(target, field)) {
-					continue;
+		}
+		
+		if (isInjectOnClickMethods) {
+			Method[] methods = target.getClass().getDeclaredMethods();
+			if (null != methods && methods.length > 0) {
+				for (Method method : methods) {
+					if (baseLoader.injectOnClickMethodListener(target, method)) {
+						continue;
+					}
 				}
 			}
 		}
+		// force GC
+		System.gc();
 	}
 }
