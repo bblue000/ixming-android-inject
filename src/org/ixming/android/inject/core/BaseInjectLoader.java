@@ -2,13 +2,10 @@ package org.ixming.android.inject.core;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.ixming.android.inject.annotation.OnClickMethodInject;
 import org.ixming.android.inject.annotation.ResInject;
 import org.ixming.android.inject.annotation.ViewInject;
-import org.ixming.android.inject.annotation.ViewOnClickInject;
 import org.ixming.android.inject.themed.ThemedResInject;
 
 import android.content.Context;
@@ -29,7 +26,7 @@ implements IViewFinder, IResInjector, IViewInjector, IOnClickListenerInjector {
 	private Context mLocalContext;
 	private Context mThemedContext;
 	private WrappedViewFinder mWrappedViewFinder;
-	private Map<String, View> mViewOnClickCache;
+//	private Map<String, View> mViewOnClickCache;
 	
 	protected BaseInjectLoader(Context localContext, Context themedContext) {
 		mLocalContext = localContext;
@@ -64,13 +61,13 @@ implements IViewFinder, IResInjector, IViewInjector, IOnClickListenerInjector {
         }
 		
 		// inject method-setter
-		ViewOnClickInject viewOnClickInject = field.getAnnotation(ViewOnClickInject.class);
-		if (null != viewOnClickInject) {
-			if (null == mViewOnClickCache) {
-				mViewOnClickCache = new HashMap<String, View>();
-			}
-			mViewOnClickCache.put(viewOnClickInject.methodName(), view);
-		}
+//		ViewOnClickInject viewOnClickInject = field.getAnnotation(ViewOnClickInject.class);
+//		if (null != viewOnClickInject) {
+//			if (null == mViewOnClickCache) {
+//				mViewOnClickCache = new HashMap<String, View>();
+//			}
+//			mViewOnClickCache.put(viewOnClickInject.methodName(), view);
+//		}
     	// anyway return true
 		return true;
 	}

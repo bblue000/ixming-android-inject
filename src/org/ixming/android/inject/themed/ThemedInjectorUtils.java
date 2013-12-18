@@ -1,6 +1,7 @@
 package org.ixming.android.inject.themed;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import org.ixming.android.inject.core.BaseInjectLoader;
 import org.ixming.android.inject.core.InjectLoaderFactory;
@@ -182,22 +183,41 @@ public class ThemedInjectorUtils {
 	}
 
 	private void innerInject(Object target, BaseInjectLoader baseLoader) {
+		boolean isInjectReses = mConfigure.isInjectReses();
+		boolean isInjectViews = mConfigure.isInjectViews();
+		boolean isInjectOnClickMethods = mConfigure.isInjectOnClickMethods();
 		// inject object
-		Field[] fields = target.getClass().getDeclaredFields();
-		if (null == fields || fields.length == 0) {
-			return;
-		}
-		for (Field field : fields) {
-			if (mConfigure.isInjectReses()) {
-				if (baseLoader.injectThemedRes(target, field)) {
-					continue;
+		// inject object
+		if (isInjectReses || isInjectViews) {
+			Field[] fields = target.getClass().getDeclaredFields();
+			if (null != fields && fields.length > 0) {
+				for (Field field : fields) {
+					if (mConfigure.isInjectReses()) {
+						if (baseLoader.injectThemedRes(target, field)) {
+							continue;
+						}
+					}
+					if (mConfigure.isInjectViews()) {
+						if (baseLoader.injectView(target, field)) {
+							continue;
+						}
+					}
 				}
 			}
-			if (mConfigure.isInjectViews()) {
-				if (baseLoader.injectView(target, field)) {
-					continue;
+		}
+		
+		if (isInjectOnClickMethods) {
+			Method[] methods = target.getClass().getDeclaredMethods();
+			if (null != methods && methods.length > 0) {
+				for (Method method : methods) {
+					if (baseLoader.injectOnClickMethodListener(target, method)) {
+						continue;
+					}
 				}
 			}
 		}
+		
+		// force GC
+		System.gc();
 	}
 }

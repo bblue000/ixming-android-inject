@@ -15,6 +15,9 @@ public class ThemedInjectConfigure extends InjectConfigure {
 	@Override
 	public String toString() {
 		return "ThemedInjectConfigure [isInjectReses()=" + isInjectReses()
-				+ ", isInjectViews()=" + isInjectViews() + "]";
+				+ ", isInjectViews()=" + isInjectViews()
+				+ ", isInjectOnClickMethods()=" + isInjectOnClickMethods()
+				+ "]";
 	}
+
 }

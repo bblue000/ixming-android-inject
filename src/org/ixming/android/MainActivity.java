@@ -1,43 +1,45 @@
 package org.ixming.android;
 
 import org.ixming.android.inject.InjectorUtils;
-import org.ixming.android.inject.annotation.OnClickMethodInject;
-import org.ixming.android.inject.annotation.ViewInject;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	@ViewInject(id=R.id.tv1)
-	TextView test1;
+//	@ViewInject(id=R.id.tv1)
+//	TextView test1;
+	
 //	@ViewInject(id=R.id.tv1)
 //	private ImageView test2;
+	
 	// right-OK
 //	@ViewInject(id=R.id.tv1)
 //	private View testx;
-	@ViewInject(id=R.id.tv1, parentId=R.id.rlt1)
-	TextView testx2;
 	
-	@ViewInject(id=R.id.tv2)
-	TextView test3;
-	@ViewInject(id=R.id.tv2, parentId=R.id.tv2)
-	TextView testx3;
+//	@ViewInject(id=R.id.tv1, parentId=R.id.rlt1)
+//	TextView testx2;
+	
+//	@ViewInject(id=R.id.tv2)
+//	TextView test3;
+	
+//	@ViewInject(id=R.id.tv2, parentId=R.id.tv2)
+//	TextView testx3;
+	
 	// error-OK
 //	@ViewInject(id=R.id.tv2, parentId=R.id.tv1)
 //	private TextView test4;
+	
 	// error-OK
 //	@ViewInject(id=R.id.tv2, parentId=R.id.rlt1)
 //	private TextView test5;
+	
 	// error-OK
 //	@ViewInject(id=R.id.tv2, parentId=R.id.rlt2)
 //	private TextView test6;
 	
-	@ViewInject(id=R.id.rlt1)
-	RelativeLayout rlt1;
+//	@ViewInject(id=R.id.rlt1)
+//	RelativeLayout rlt1;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +69,8 @@ public class MainActivity extends Activity {
 //    	Log.i("yytest", "test4 " + o);
 //    }
     
-    @OnClickMethodInject(id=R.id.tv1)
-    void test5(String a, byte b, Runnable c) {
-    	Log.i("yytest", "test5 : " + a + ", " + b + ", " + c);
-    }
+//    @OnClickMethodInject(id=R.id.tv1)
+//    void test5(String a, byte b, Runnable c) {
+//    	Log.i("yytest", "test5 : " + a + ", " + b + ", " + c);
+//    }
 }
