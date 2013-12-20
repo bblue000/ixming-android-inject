@@ -64,7 +64,7 @@ public class ThemedInjectorUtils {
 		return new ThemedInjectorUtils(configure);
 	}
 
-	private ThemedInjectConfigure mConfigure;
+	private final ThemedInjectConfigure mConfigure;
 
 	protected ThemedInjectorUtils() {
 		this(new ThemedInjectConfigure());
