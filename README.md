@@ -6,9 +6,8 @@ This is a simple android utility for my Project.
 ## 简述
 看了一些小框架，尝试自己编写了这个工具，功能现在很单一
 
-
-### 使用方法
 --------------
+### 使用方法
 * 完全注解方式就可以进行UI绑定、资源动态获取和事件绑定（>目前只支持onClick方法的绑定，因为考虑到其他方法的复杂性和多样性，而不想在一些方面太多地限制使用者，比如<b>方法参数传递</b>）。
 * 无需调用findViewById和setOnClickListener等。
 
@@ -98,8 +97,7 @@ public view getView(int position, View convertView, ViewGroup parent) {
 ...
 ```
 
----
-
+--------------
 ## 注意点
 * 虽然onClick事件监听尝试减少参数的限制，但是这是避免不了的，使用时还得多加注意。
   > * 该处考虑参数虽然有点多余（使用时要获取的参数Activity内部都已有变量），可是否使用参数是使用者特定的情形下决定的，而这一点跟具体情况关系密切，不能模糊猜测使用者的用意，导致弄巧成拙——如果跟监听事件一样，那么跟不使用工具有什么区别？
@@ -147,3 +145,4 @@ public view getView(int position, View convertView, ViewGroup parent) {
 ```
 * 在<i>org.ixming.android.inject.themed</i>包内的功能是用于app之间使用的，类似QQ的换肤实现情境下可以使用
 
+--------------
