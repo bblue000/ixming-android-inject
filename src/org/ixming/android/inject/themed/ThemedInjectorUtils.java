@@ -187,32 +187,31 @@ public class ThemedInjectorUtils {
 		boolean isInjectViews = mConfigure.isInjectViews();
 		boolean isInjectOnClickMethods = mConfigure.isInjectOnClickMethods();
 		// inject object
-		// inject object
-		if (isInjectReses || isInjectViews) {
+		if (isInjectReses || isInjectViews) Inject1: {
 			Field[] fields = target.getClass().getDeclaredFields();
-			if (null != fields && fields.length > 0) {
-				for (Field field : fields) {
-					if (mConfigure.isInjectReses()) {
-						if (baseLoader.injectThemedRes(target, field)) {
-							continue;
-						}
-					}
-					if (mConfigure.isInjectViews()) {
-						if (baseLoader.injectView(target, field)) {
-							continue;
-						}
-					}
+			if (null == fields || fields.length == 0) {
+				break Inject1;
+			}
+			for (Field field : fields) {
+				if (isInjectReses && baseLoader.injectThemedRes(target, field)) {
+					continue;
 				}
+				// next
+				if (isInjectViews && baseLoader.injectView(target, field)) {
+					continue;
+				}
+				// to be continued
 			}
 		}
 		
-		if (isInjectOnClickMethods) {
+		if (isInjectOnClickMethods) Inject2: {
 			Method[] methods = target.getClass().getDeclaredMethods();
-			if (null != methods && methods.length > 0) {
-				for (Method method : methods) {
-					if (baseLoader.injectOnClickMethodListener(target, method)) {
-						continue;
-					}
+			if (null == methods || methods.length == 0) {
+				break Inject2;
+			}
+			for (Method method : methods) {
+				if (baseLoader.injectOnClickMethodListener(target, method)) {
+					continue;
 				}
 			}
 		}

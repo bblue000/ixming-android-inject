@@ -160,33 +160,31 @@ public class InjectorUtils {
 		boolean isInjectViews = config.isInjectViews();
 		boolean isInjectOnClickMethods = config.isInjectOnClickMethods();
 		// inject object
-		if (isInjectReses || isInjectViews) {
+		if (isInjectReses || isInjectViews) Inject1: {
 			Field[] fields = target.getClass().getDeclaredFields();
-			if (null != fields && fields.length > 0) {
-				for (Field field : fields) {
-					if (isInjectReses) {
-						if (baseLoader.injectRes(target, field)) {
-							continue;
-						}
-					}
-					// next
-					if (isInjectViews) {
-						if (baseLoader.injectView(target, field)) {
-							continue;
-						}
-					}
-					// to be continued
+			if (null == fields || fields.length == 0) {
+				break Inject1;
+			}
+			for (Field field : fields) {
+				if (isInjectViews && baseLoader.injectView(target, field)) {
+					continue;
 				}
+				// next
+				if (isInjectReses && baseLoader.injectRes(target, field)) {
+					continue;
+				}
+				// to be continued
 			}
 		}
 		
-		if (isInjectOnClickMethods) {
+		if (isInjectOnClickMethods) Inject2: {
 			Method[] methods = target.getClass().getDeclaredMethods();
-			if (null != methods && methods.length > 0) {
-				for (Method method : methods) {
-					if (baseLoader.injectOnClickMethodListener(target, method)) {
-						continue;
-					}
+			if (null == methods || methods.length == 0) {
+				break Inject2;
+			}
+			for (Method method : methods) {
+				if (baseLoader.injectOnClickMethodListener(target, method)) {
+					continue ;
 				}
 			}
 		}
