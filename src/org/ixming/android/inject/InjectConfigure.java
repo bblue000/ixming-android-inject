@@ -27,6 +27,17 @@ public class InjectConfigure {
 	public InjectConfigure() {}
 	
 	/**
+	 * 批量设置客户端是否需要动态注入
+	 * @return 为了方便链式设置，返回原对象
+	 */
+	public InjectConfigure setToAll(boolean ifInject) {
+		mInjectReses = ifInject;
+		mInjectViews = ifInject;
+		mInjectOnClickMethods = ifInject;
+		return this;
+	}
+	
+	/**
 	 * 设置客户端是否需要动态注入成员变量对应的Res资源
 	 * @return 为了方便链式设置，返回原对象
 	 */
