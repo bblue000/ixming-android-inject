@@ -52,16 +52,9 @@ public class InjectorUtils {
 
 	/**
 	 * 根据客户端自定义的configure设置获得相应支持的实例
-	 * 
-	 * <p>
-	 * <strong><i>Tips:</i></strong><br/>
-	 * 当没有通过{@link InjectorUtils#buildAsSingleton(InjectConfigure)}设置客户端单例时，
-	 * 回创建一个新对象；<br/>
-	 * 当作为单例创建后，始终返回单例对象。（configure is ignored）
-	 * </p>
 	 */
 	public static InjectorUtils instanceBuildFrom(InjectConfigure configure) {
-		return null == mSingleton ? new InjectorUtils(configure) : mSingleton;
+		return new InjectorUtils(configure);
 	}
 	
 	private final InjectConfigure mConfigure;
@@ -70,6 +63,10 @@ public class InjectorUtils {
 	}
 
 	InjectorUtils(InjectConfigure configure) {
+		if (null == configure) {
+			// new default
+			configure = new InjectConfigure();
+		}
 		mConfigure = configure;
 	}
 
