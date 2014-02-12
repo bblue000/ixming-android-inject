@@ -84,10 +84,12 @@ public class InjectConfigure {
 	public boolean isInjectOnClickMethods() {
 		return mInjectOnClickMethods;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "InjectConfigure [mInjectReses=" + mInjectReses
-				+ ", mInjectViews=" + mInjectViews + "]";
+				+ ", mInjectViews=" + mInjectViews + ", mInjectOnClickMethods="
+				+ mInjectOnClickMethods + "]";
 	}
+	
 }
